@@ -1,0 +1,1 @@
+php artisan migrate:rollback; php artisan migrate --seed; php artisan passport:install --force
