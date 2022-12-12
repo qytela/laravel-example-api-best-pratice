@@ -8,12 +8,14 @@ use App\Models\Group;
 
 trait GroupableTrait
 {
+    protected $relationGroupName = 'groups';
+
     /**
      * Eligible group on user group (exclude superadmin) to according model group
      */
     public function eligibleGroups(Model $model): Builder
     {
-        if (!method_exists($model, 'groups')) abort(500, config('constants.errors.model_groups_undefined'));
+        if (!method_exists($model, $this->relationGroupName)) abort(500, config('constants.errors.model_groups_undefined'));
 
         $groupIds = [];
         $tempGroupIds[] = Group::getGroupPublicId();
@@ -22,8 +24,13 @@ trait GroupableTrait
             /** @var \App\Models\User $user */
             $user = auth()->user();
 
-            if ($user->isSuperadmin()) return $model->whereHas('groups');
-            if ($user->hasGroups()) $tempGroupIds[] = $user->groupIds();
+            if ($user->isSuperadmin()) {
+                return $model->whereHas($this->relationGroupName)->orWhereDoesntHave($this->relationGroupName);
+            }
+
+            if ($user->hasGroups()) {
+                $tempGroupIds[] = $user->getGroupsId();
+            }
         }
 
         foreach ($tempGroupIds as $tempGroupId) {
@@ -32,8 +39,8 @@ trait GroupableTrait
             }
         }
 
-        return $model->whereHas('groups', function ($q) use ($groupIds) {
+        return $model->whereHas($this->relationGroupName, function ($q) use ($groupIds) {
             $q->whereIn('id', $groupIds);
-        });
+        })->orWhereDoesntHave($this->relationGroupName);
     }
 }
