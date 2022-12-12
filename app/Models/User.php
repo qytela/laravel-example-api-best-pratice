@@ -60,7 +60,7 @@ class User extends Authenticatable
      */
     public function scopeMyProfile($q): User
     {
-        return $q->where('id', auth()->id())->with('roles.permissions')->first();
+        return $q->whereId(auth()->id())->with('roles.permissions')->first();
     }
 
     /**
@@ -76,7 +76,7 @@ class User extends Authenticatable
     /**
      * Get all user group id
      */
-    public function scopeGroupIds(): object
+    public function scopeGetGroupsId(): object
     {
         return auth()->user()->groups->pluck('id');
     }

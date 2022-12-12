@@ -27,6 +27,6 @@ class Role extends SpatieRole
      */
     public function scopeCountRoleByName($q, string $name): int
     {
-        return $q->where('name', $name)->count() ?? 0;
+        return $q->whereName($name)->count() ?? 0;
     }
 }

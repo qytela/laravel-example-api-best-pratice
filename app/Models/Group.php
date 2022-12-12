@@ -40,6 +40,6 @@ class Group extends Model
      */
     public function scopeGetGroupPublicId($q): object
     {
-        return $q->where('name', 'public')->pluck('id');
+        return $q->whereName('public')->pluck('id');
     }
 }
