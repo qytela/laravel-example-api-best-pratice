@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Group;
 
@@ -11,7 +11,7 @@ trait GroupableTrait
     /**
      * Eligible groups for user group (exclude superadmin) has same model group
      */
-    public function eligibleGroups(Model $model): Collection
+    public function eligibleGroups(Model $model): Builder
     {
         if (!method_exists($model, 'groups')) abort(500, config('constants.errors.model_groups_undefined'));
 
@@ -22,7 +22,7 @@ trait GroupableTrait
             /** @var \App\Models\User $user */
             $user = auth()->user();
 
-            if ($user->isSuperadmin()) return $model->get();
+            if ($user->isSuperadmin()) return $model->whereHas('groups');
             if ($user->hasGroups()) $tempGroupIds[] = $user->groupIds();
         }
 
@@ -34,6 +34,6 @@ trait GroupableTrait
 
         return $model->whereHas('groups', function ($q) use ($groupIds) {
             $q->whereIn('id', $groupIds);
-        })->get();
+        });
     }
 }
