@@ -9,7 +9,7 @@ use App\Models\Group;
 trait GroupableTrait
 {
     /**
-     * Eligible groups for user group (exclude superadmin) has same model group
+     * Eligible group on user group (exclude superadmin) to according model group
      */
     public function eligibleGroups(Model $model): Collection
     {
