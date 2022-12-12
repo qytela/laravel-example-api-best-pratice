@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Article\IndexRequest;
 use App\Http\Requests\Article\StoreRequest;
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
@@ -23,10 +24,10 @@ class ArticleController extends Controller
         $this->article = $article;
     }
 
-    public function index(): ArticleCollection
+    public function index(IndexRequest $request): ArticleCollection
     {
         return new ArticleCollection(
-            $this->eligibleGroups($this->article)
+            $this->eligibleGroups($this->article)->withPaginate($request)
         );
     }
 

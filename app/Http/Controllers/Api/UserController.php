@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PaginateRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
+use App\Traits\GroupableTrait;
 use App\Models\User;
 
 class UserController extends Controller
 {
+    use GroupableTrait;
+
     protected User $user;
 
     public function __construct(User $user)
@@ -16,9 +20,11 @@ class UserController extends Controller
         $this->user = $user;
     }
 
-    public function index(): UserCollection
+    public function index(PaginateRequest $request): UserCollection
     {
-        return new UserCollection($this->user->get());
+        return new UserCollection(
+            $this->eligibleGroups($this->user)->withPaginate($request)
+        );
     }
 
     public function show(User $user): UserResource
