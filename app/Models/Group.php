@@ -36,6 +36,14 @@ class Group extends Model
     }
 
     /**
+     * Relation group name
+     */
+    public function scopeRelationGroupName(): string
+    {
+        return 'groups';
+    }
+
+    /**
      * Get group id only public
      */
     public function scopeGetGroupPublicId($q): object
