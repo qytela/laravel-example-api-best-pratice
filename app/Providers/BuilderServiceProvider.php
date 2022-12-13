@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Requests\PaginateRequest;
 
@@ -29,15 +28,16 @@ class BuilderServiceProvider extends ServiceProvider
     {
         /**
          * Add the with-paginate to the builder
+         * 
+         * Transform result to paginate
          */
         Builder::macro('withPaginate', function (PaginateRequest $request): LengthAwarePaginator {
+            /** @var Builder $this */
+
             $limit = $request->limit ?? 10;
             $page = $request->page ?? 1;
 
-            /** @var Model $model */
-            $model = $this;
-
-            return $model->paginate($limit, '*', 'offset', $page);
+            return $this->paginate($limit, '*', 'offset', $page);
         });
     }
 }
