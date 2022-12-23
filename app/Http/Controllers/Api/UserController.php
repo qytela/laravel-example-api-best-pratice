@@ -34,6 +34,6 @@ class UserController extends Controller
 
     public function profile(): UserResource
     {
-        return new UserResource($this->user->myProfile());
+        return new UserResource($this->user->me());
     }
 }
