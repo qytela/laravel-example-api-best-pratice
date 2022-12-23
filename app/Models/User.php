@@ -36,6 +36,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verified_at',
     ];
 
     /**
@@ -99,7 +100,7 @@ class User extends Authenticatable
 
     public function articles()
     {
-        return $this->hasMany(Article::class, 'created_id', 'id');
+        return $this->hasMany(Article::class, 'created_id');
     }
 
     public function groups()

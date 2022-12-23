@@ -8,28 +8,23 @@ use App\Http\Requests\Article\StoreRequest;
 use App\Http\Resources\ArticleCollection;
 use App\Http\Resources\ArticleResource;
 use App\Services\ArticleService;
-use App\Traits\GroupableTrait;
 use App\Models\Article;
 
 class ArticleController extends Controller
 {
-    use GroupableTrait;
-
-    protected ArticleService $articleService;
     protected Article $article;
+    protected ArticleService $articleService;
 
-    public function __construct(ArticleService $articleService, Article $article)
+    public function __construct(Article $article, ArticleService $articleService)
     {
-        $this->articleService = $articleService;
         $this->article = $article;
+        $this->articleService = $articleService;
     }
 
     public function index(IndexRequest $request): ArticleCollection
     {
         return new ArticleCollection(
-            $this->eligibleGroups($this->article)
-                ->filter($request->validated())
-                ->withPaginate($request)
+            $this->articleService->getArticles($this->article, $request)
         );
     }
 
