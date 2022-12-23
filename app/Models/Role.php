@@ -22,6 +22,8 @@ class Role extends SpatieRole
         'description',
     ];
 
+    public const Member = 'member';
+
     /**
      * Count role record by role name
      */

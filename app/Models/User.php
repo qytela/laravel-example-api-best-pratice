@@ -58,7 +58,7 @@ class User extends Authenticatable
     /**
      * Show my user only
      */
-    public function scopeMyProfile($q): User
+    public function scopeMe($q): User
     {
         return $q->whereId(auth()->id())->with('roles.permissions')->first();
     }
