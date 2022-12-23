@@ -24,7 +24,8 @@ class IndexRequest extends PaginateRequest
     public function rules()
     {
         return [
-            //
+            'title' => [''],
+            'type' => ['string', 'in:PRIVATE,PUBLIC']
         ];
     }
 }

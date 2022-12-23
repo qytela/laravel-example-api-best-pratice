@@ -27,7 +27,9 @@ class ArticleController extends Controller
     public function index(IndexRequest $request): ArticleCollection
     {
         return new ArticleCollection(
-            $this->eligibleGroups($this->article)->withPaginate($request)
+            $this->eligibleGroups($this->article)
+                ->filter($request->validated())
+                ->withPaginate($request)
         );
     }
 
