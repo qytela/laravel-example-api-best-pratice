@@ -45,7 +45,7 @@ class BuilderServiceProvider extends ServiceProvider
          * 
          * Exclude column from selected
          */
-        Builder::macro('exclude', function (array $columns) {
+        Builder::macro('exclude', function (array $columns): Builder {
             /** @var Builder $this */
 
             $model = $this->getModel();
@@ -59,7 +59,7 @@ class BuilderServiceProvider extends ServiceProvider
          * 
          * Only column selected
          */
-        Builder::macro('only', function (array $columns) {
+        Builder::macro('only', function (array $columns): Builder {
             /** @var Builder $this */
 
             return $this->select($columns);
