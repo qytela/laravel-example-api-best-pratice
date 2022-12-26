@@ -27,9 +27,19 @@ class EncryptResponse
         return $response;
     }
 
+    /**
+     * If the environment is production and the response is a success code, encrypt the response. otherwise return response as is
+     * 
+     * @param JsonResponse response The response object that is being returned from the controller.
+     */
     protected function modifyResponse(JsonResponse $response)
     {
-        if (config('app.env') === 'production') {
+        $successCodes = [200, 201];
+
+        if (
+            config('app.env') === 'production' &&
+            in_array($response->getStatusCode(), $successCodes)
+        ) {
             $content = json_decode($response->content(), true);
             $payload = [
                 'payload' => Crypt::encryptString(json_encode($content))
