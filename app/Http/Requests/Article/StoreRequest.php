@@ -27,6 +27,7 @@ class StoreRequest extends FormRequest
             'title' => ['string', 'required', 'max:255'],
             'description' => ['string'],
             'type' => ['string', 'required', 'in:PRIVATE,PUBLIC'],
+            'thumbnail' => ['max:10000', 'mimes:jpg,jpeg,png'],
             'groups' => ['array'],
             'groups.*' => ['string']
         ];

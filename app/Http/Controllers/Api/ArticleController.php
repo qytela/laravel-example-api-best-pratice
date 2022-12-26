@@ -31,7 +31,7 @@ class ArticleController extends Controller
     public function store(StoreRequest $request): ArticleResource
     {
         $article = $this->article->create($request->validated());
-        $this->articleService->syncGroups($article, $request->validated()['groups']);
+        $this->articleService->syncGroups($article, $request->validated()['groups'] ?? []);
 
         return new ArticleResource($article);
     }
