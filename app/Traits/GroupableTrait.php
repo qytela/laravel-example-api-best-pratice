@@ -28,7 +28,7 @@ trait GroupableTrait
      */
     public function eligibleGroups(Model $model): Builder
     {
-        if (!method_exists($model, $this->loadGroupModel()->relationGroupName())) abort(500, config('constants.errors.model_groups_undefined'));
+        $this->isRelationExists($model);
 
         $groupIds = [];
         $tempGroupIds[] = $this->loadGroupModel()->getGroupPublicId();
@@ -63,8 +63,9 @@ trait GroupableTrait
      */
     public function onlyGroups(Model $model, array $groupIds = []): Builder
     {
-        /** @var Builder $model */
+        $this->isRelationExists($model);
 
+        /** @var Builder $model */
         return
             $model->whereHas(
                 $this->loadGroupModel()->relationGroupName(),
@@ -74,5 +75,15 @@ trait GroupableTrait
                     }
                     : null
             )->orWhereDoesntHave($this->loadGroupModel()->relationGroupName());
+    }
+
+    /**
+     * If the model doesn't have the relation defined, throw an error.
+     * 
+     * @param Model model The model that you want to check if it has a relation.
+     */
+    protected function isRelationExists(Model $model)
+    {
+        if (!method_exists($model, $this->loadGroupModel()->relationGroupName())) abort(500, config('constants.errors.model_groups_undefined'));
     }
 }
