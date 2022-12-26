@@ -17,6 +17,35 @@ Eligible group on user group (exclude superadmin) to according model group.
 
 ---
 
+> {warning.fa fa-info-circle} If you want use this function, make sure you already define `groups` relation.
+
+Example on `Article` model
+
+Migration
+```php
+Schema::create('article_group', function (Blueprint $table) {
+    $table->foreignIdFor(Article::class)->constrained()->onDelete('cascade');
+    $table->foreignIdFor(Group::class)->constrained()->onDelete('cascade');
+
+    $table->index(['article_id', 'group_id']);
+});
+```
+
+Model
+```php
+public function groups()
+{
+    return $this->belongsToMany(Group::class, 'article_group');
+}
+```
+
+Table (`article_group`)
+
+article_id | group_id |
+:-         | :-       |
+1          | 1        |
+2          | 2        |
+
 Example, using `eligibleGroups(Model)`
 
 ```php
@@ -32,7 +61,7 @@ class YourClass
     public function index(): ModelResources
     {
         return new ModelResources(
-            $this->eligibleGroups($this->model)->get()
+            $this->eligibleGroups($this->article)->get()
         );
     }
 }

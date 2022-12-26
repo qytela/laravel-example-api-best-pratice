@@ -8,7 +8,7 @@ References: [https://laravel.com/docs/9.x/eloquent#local-scopes](https://laravel
 
 ---
 
-Example from local scope in `User` model
+Example from local scope on `User` model
 
 ```php
 /**
