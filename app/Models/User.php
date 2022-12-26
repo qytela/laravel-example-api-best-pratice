@@ -49,7 +49,22 @@ class User extends Authenticatable
     ];
 
     /**
-     * Find username or email
+     * The function takes a string as an argument, and sets the password attribute to the bcrypt of the
+     * string
+     * 
+     * @param string password The password to be hashed.
+     */
+    public function setPasswordAttribute(string $password): void
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    /**
+     * It returns the first user that matches the username or email
+     * 
+     * @param string value The value of the unique identifier for the user.
+     * 
+     * @return The first user that matches the username or email.
      */
     public function findForPassport(string $value)
     {
@@ -57,7 +72,12 @@ class User extends Authenticatable
     }
 
     /**
-     * Show my user only
+     * It returns the user with the id of the currently authenticated user, with the roles and
+     * permissions of that user
+     * 
+     * @param q The query builder instance.
+     * 
+     * @return User A query builder object.
      */
     public function scopeMe($q): User
     {
@@ -65,7 +85,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Determine if user has role superadmin
+     * If the user is logged in and has the role of superadmin, return true, otherwise return false
+     * 
+     * @return bool A boolean value.
      */
     public function scopeIsSuperadmin(): bool
     {
@@ -75,7 +97,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all user group id
+     * It returns an array of the ids of the groups that the user belongs to
+     * 
+     * @return object An object
      */
     public function scopeGetGroupsId(): object
     {
@@ -83,19 +107,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Determine if user has groups
+     * If the user has groups, return true, otherwise return false
+     * 
+     * @return bool A boolean value.
      */
     public function scopeHasGroups(): bool
     {
         return auth()->user()->groups->count() > 0 ? true : false;
-    }
-
-    /**
-     * Set password attribute to bcrypt
-     */
-    public function setPasswordAttribute(string $password): void
-    {
-        $this->attributes['password'] = bcrypt($password);
     }
 
     public function articles()

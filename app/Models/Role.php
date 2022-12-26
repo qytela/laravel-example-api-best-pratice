@@ -25,7 +25,12 @@ class Role extends SpatieRole
     public const Member = 'member';
 
     /**
-     * Count role record by role name
+     * > Count the number of roles with the given name
+     * 
+     * @param q The query builder object
+     * @param string name The name of the scope
+     * 
+     * @return int The number of roles with the name.
      */
     public function scopeCountRoleByName($q, string $name): int
     {

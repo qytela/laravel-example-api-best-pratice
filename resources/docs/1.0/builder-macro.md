@@ -60,7 +60,7 @@ page         | 1         |
 
 ## Exclude
 
-Exclude column from selected.
+Exclude columns from fillable.
 
 ---
 
@@ -81,7 +81,7 @@ public function index(): ModelResources
 
 ## Only
 
-Only column selected.
+Only columns selected.
 
 ---
 

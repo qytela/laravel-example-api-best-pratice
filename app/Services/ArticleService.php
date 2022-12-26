@@ -21,7 +21,13 @@ class ArticleService
     }
 
     /**
-     * Show all article
+     * It returns a paginated collection of articles that are eligible for the given article, filtered
+     * by the given request, excluding the description, and eager loading the user.
+     * 
+     * @param Article article The article model
+     * @param IndexRequest request The request object
+     * 
+     * @return LengthAwarePaginator A LengthAwarePaginator
      */
     public function getArticles(Article $article, IndexRequest $request): LengthAwarePaginator
     {
@@ -33,7 +39,11 @@ class ArticleService
     }
 
     /**
-     * Sync article with groups
+     * It takes an array of group names, and if they don't exist, it creates them. Then it syncs the
+     * article with the groups
+     * 
+     * @param Article article The article object
+     * @param array groups array of group names
      */
     public function syncGroups(Article $article, array $groups): void
     {

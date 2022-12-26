@@ -9,7 +9,9 @@ use App\Models\Group;
 trait GroupableTrait
 {
     /**
-     * Load model
+     * This function returns a new instance of the Group class.
+     * 
+     * @return Group A new instance of the Group class.
      */
     private function loadGroupModel(): Group
     {
@@ -17,7 +19,12 @@ trait GroupableTrait
     }
 
     /**
-     * Eligible group on user group (exclude superadmin) to according model group
+     * It returns a query builder object that will return all the records that are in the groups that
+     * the user is a member of
+     * 
+     * @param Model model The model that you want to filter
+     * 
+     * @return Builder A collection of groups that the user is eligible to see.
      */
     public function eligibleGroups(Model $model): Builder
     {
@@ -44,7 +51,15 @@ trait GroupableTrait
     }
 
     /**
-     * Returns only to the specified group
+     * "If the user is in a group, only show them the records that are in their group, otherwise show
+     * them all records."
+     * 
+     * The function is called like this:
+     * 
+     * @param Model model The model you're querying
+     * @param array groupIds array of group ids
+     * 
+     * @return Builder A Builder object.
      */
     public function onlyGroups(Model $model, array $groupIds = []): Builder
     {

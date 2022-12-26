@@ -19,17 +19,14 @@
 
         <div class="block mx-4 flex items-center">
             @if(config('larecipe.search.enabled'))
-                <larecipe-button id="search-button"
-                    :type="searchBox ? 'primary' : 'link'"
-                    @click="searchBox = ! searchBox"
-                    class="px-4">
-                    <i class="fas fa-search" id="search-button-icon"></i>
-                </larecipe-button>
+            <larecipe-button id="search-button" :type="searchBox ? 'primary' : 'link'" @click="searchBox = ! searchBox" class="px-4">
+                <i class="fas fa-search" id="search-button-icon"></i>
+            </larecipe-button>
             @endif
 
-            <larecipe-button tag="a" href="https://github.com/saleem-hadad/larecipe" target="__blank" type="black" class="mx-2 px-4">
+            <!-- <larecipe-button tag="a" href="https://github.com/saleem-hadad/larecipe" target="__blank" type="black" class="mx-2 px-4">
                 <i class="fab fa-github"></i>
-            </larecipe-button>
+            </larecipe-button> -->
 
             {{-- versions dropdown --}}
             <larecipe-dropdown>
@@ -40,9 +37,9 @@
                 <template slot="list">
                     <ul class="list-reset">
                         @foreach ($versions as $version)
-                            <li class="py-2 hover:bg-grey-lightest">
-                                <a class="px-6 text-grey-darkest" href="{{ route('larecipe.show', ['version' => $version, 'page' => $currentSection]) }}">{{ $version }}</a>
-                            </li>
+                        <li class="py-2 hover:bg-grey-lightest">
+                            <a class="px-6 text-grey-darkest" href="{{ route('larecipe.show', ['version' => $version, 'page' => $currentSection]) }}">{{ $version }}</a>
+                        </li>
                         @endforeach
                     </ul>
                 </template>
@@ -50,21 +47,21 @@
             {{-- /versions dropdown --}}
 
             @auth
-                {{-- account --}}
-                <larecipe-dropdown>
-                    <larecipe-button type="white" class="ml-2">
-                        {{ auth()->user()->name ?? 'Account' }} <i class="fa fa-angle-down"></i>
-                    </larecipe-button>
+            {{-- account --}}
+            <larecipe-dropdown>
+                <larecipe-button type="white" class="ml-2">
+                    {{ auth()->user()->name ?? 'Account' }} <i class="fa fa-angle-down"></i>
+                </larecipe-button>
 
-                    <template slot="list">
-                        <form action="/logout" method="POST">
-                            {{ csrf_field() }}
+                <template slot="list">
+                    <form action="/logout" method="POST">
+                        {{ csrf_field() }}
 
-                            <button type="submit" class="py-2 px-4 text-white bg-danger inline-flex"><i class="fa fa-power-off mr-2"></i> Logout</button>
-                        </form>
-                    </template>
-                </larecipe-dropdown>
-                {{-- /account --}}
+                        <button type="submit" class="py-2 px-4 text-white bg-danger inline-flex"><i class="fa fa-power-off mr-2"></i> Logout</button>
+                    </form>
+                </template>
+            </larecipe-dropdown>
+            {{-- /account --}}
             @endauth
         </div>
     </nav>

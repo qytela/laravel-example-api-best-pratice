@@ -52,7 +52,15 @@ const payload = () => {
 const data = JSON.parse(Buffer.from(payload(), 'base64'))
 const iv = CryptoJS.enc.Base64.parse(data.iv)
 
-// Paste your secret key here
+/**
+ * Paste your secret key without "base64:"
+ * 
+ * Example
+ * SECRET_CIPHER_KEY=base64:go7kcs1Uw0PQ/nmuEpuJ7wGBzrF4vBdP+QnBrtYQdmA=
+ * 
+ * without "base64:"
+ * const key = 'go7kcs1Uw0PQ/nmuEpuJ7wGBzrF4vBdP+QnBrtYQdmA='
+ */
 const key = 'SECRET_CIPHER_KEY'
 
 const dec = CryptoJS.AES.decrypt(data.value, CryptoJS.enc.Base64.parse(key), { iv })

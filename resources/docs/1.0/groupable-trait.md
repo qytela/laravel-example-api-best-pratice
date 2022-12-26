@@ -24,7 +24,8 @@ use App\Traits\GroupableTrait;
 
 class YourClass
 {
-    use GroupableTrait;
+    // Import traits
+    use GroupableTrait, OtherTrait;
 
     // ... IoC Container
 
@@ -52,7 +53,8 @@ use App\Traits\GroupableTrait;
 
 class YourClass
 {
-    use GroupableTrait;
+    // Import traits
+    use GroupableTrait, OtherTrait;
 
     // ... IoC Container
 

@@ -30,13 +30,18 @@ class Group extends Model
     {
         parent::boot();
 
+        // A function that is called when the model is created
         static::creating(function ($item) {
             $item->created_id = auth()->id();
         });
     }
 
+
     /**
-     * Relation group name
+     * This function returns the name of the relation that is used to access the groups that a user
+     * belongs to.
+     * 
+     * @return string The name of the relation.
      */
     public function scopeRelationGroupName(): string
     {
@@ -44,7 +49,11 @@ class Group extends Model
     }
 
     /**
-     * Get group id only public
+     * It returns the id of the group named 'public'
+     * 
+     * @param q The query builder object
+     * 
+     * @return object A query builder object.
      */
     public function scopeGetGroupPublicId($q): object
     {

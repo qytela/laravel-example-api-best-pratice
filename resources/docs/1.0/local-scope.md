@@ -12,7 +12,9 @@ Example from local scope in `User` model
 
 ```php
 /**
- * Determine if user has role superadmin
+ * If the user is logged in and has the role of superadmin, return true, otherwise return false
+ * 
+ * @return bool A boolean value.
  */
 public function scopeIsSuperadmin(): bool
 {

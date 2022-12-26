@@ -9,7 +9,13 @@ use App\Models\Role;
 class StoreUserAction
 {
     /**
-     * Store or create new user
+     * It creates a new user, assigns the role of Member to the user, and then creates a token for the
+     * user
+     * 
+     * @param User user The user model
+     * @param RegisterRequest request The request object
+     * 
+     * @return User The User object.
      */
     public function execute(User $user, RegisterRequest $request): User
     {

@@ -35,11 +35,18 @@ class Article extends Model
     {
         parent::boot();
 
+        // A function that is called when the model is created
         static::creating(function ($item) {
             $item->created_id = auth()->id();
         });
     }
 
+    /**
+     * If the thumbnail is not null, then store the thumbnail in the public/articles/thumbnails
+     * directory and set the thumbnail attribute to the path of the thumbnail
+     * 
+     * @param thumbnail The name of the file input field in the form.
+     */
     protected function setThumbnailAttribute($thumbnail)
     {
         if (!is_null($thumbnail)) {
@@ -48,6 +55,13 @@ class Article extends Model
         }
     }
 
+    /**
+     * If the file exists, return the url, otherwise return null
+     * 
+     * @param path The path to the file.
+     * 
+     * @return The url of the image.
+     */
     protected function getThumbnailAttribute($path)
     {
         /** @var Storage $public  */
@@ -61,7 +75,12 @@ class Article extends Model
     }
 
     /**
-     * Relationship with user
+     * "When you call the `withUser` function on a query builder, it will return the query builder with
+     * the `user` relationship eager loaded, but only the `id` and `name` fields will be returned."
+     * 
+     * @param q The query builder instance.
+     * 
+     * @return Builder A query builder instance.
      */
     public function scopeWithUser($q): Builder
     {
