@@ -8,7 +8,6 @@
 
 - [With Paginate](#with-paginate)
 - [Exclude](#exclude)
-- [Only](#only)
 
 <a name="with-paginate"></a>
 
@@ -73,27 +72,6 @@ public function index(): ModelResources
 {
     return new ModelResources(
         $this->model->exclude(['name', 'username', 'email'])->get()
-    );
-}
-```
-
-<a name="only"></a>
-
-## Only
-
-Only include certain columns in a query builder instance.
-
----
-
-Example, using `only(array)`
-
-```php
-// ... IoC Container
-
-public function index(): ModelResources
-{
-    return new ModelResources(
-        $this->model->only(['name', 'username', 'email'])->get()
     );
 }
 ```

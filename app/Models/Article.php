@@ -76,7 +76,7 @@ class Article extends Model
 
     /**
      * "When you call the `withUser` function on a query builder, it will return the query builder with
-     * the `user` relationship eager loaded, but only the `id` and `name` fields will be returned."
+     * the `user` relationship eager loaded."
      * 
      * @param q The query builder instance.
      * 
@@ -86,7 +86,7 @@ class Article extends Model
     {
         return $q->with([
             'user' => function ($qb) {
-                $qb->only(['id', 'name']);
+                $qb->select(['id', 'name']);
             }
         ]);
     }

@@ -59,19 +59,5 @@ class BuilderServiceProvider extends ServiceProvider
 
             return $this->select(array_diff($tableColumns, $columns));
         });
-
-        /**
-         * Add the 'only' to the builder.
-         * Only include certain columns in a query builder instance.
-         * 
-         * @param array columns An array of column names to include in the query.
-         * 
-         * @return Builder The modified query builder instance.
-         */
-        Builder::macro('only', function (array $columns): Builder {
-            /** @var Builder $this */
-
-            return $this->select($columns);
-        });
     }
 }
