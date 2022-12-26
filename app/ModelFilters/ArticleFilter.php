@@ -23,8 +23,9 @@ class ArticleFilter extends ModelFilter
      * 
      * @return Builder query builder object.
      */
-    public function title($value): Builder
+    public function title($value)
     {
+        /** @var Builder $this */
         return $this->where(DB::raw('LOWER(title)'), 'like', '%' . strtolower($value) . '%');
     }
 
@@ -35,8 +36,9 @@ class ArticleFilter extends ModelFilter
      * 
      * @return Builder query builder instance.
      */
-    public function type($value): Builder
+    public function type($value)
     {
+        /** @var Builder $this */
         return $this->where('type', $value);
     }
 }
