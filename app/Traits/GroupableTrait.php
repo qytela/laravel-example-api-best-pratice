@@ -8,14 +8,14 @@ use App\Models\Group;
 
 trait GroupableTrait
 {
+    protected Group $group;
+
     /**
-     * This function returns a new instance of the Group class.
-     * 
-     * @return Group A new instance of the Group class.
+     * This function is called when the trait is used in a class.
      */
-    private function loadGroupModel(): Group
+    public function initializeGroupableTrait(Group $group)
     {
-        return new Group();
+        $this->group = $group;
     }
 
     /**
@@ -31,7 +31,7 @@ trait GroupableTrait
         $this->isRelationExists($model);
 
         $groupIds = [];
-        $tempGroupIds[] = $this->loadGroupModel()->getGroupPublicId();
+        $tempGroupIds[] = $this->group->getGroupPublicId();
 
         if (auth()->check()) {
             /** @var \App\Models\User $user */
@@ -68,13 +68,13 @@ trait GroupableTrait
         /** @var Builder $model */
         return
             $model->whereHas(
-                $this->loadGroupModel()->relationGroupName(),
+                $this->group->relationGroupName(),
                 count($groupIds) > 0
                     ? function ($q) use ($groupIds) {
                         $q->whereIn('id', $groupIds);
                     }
                     : null
-            )->orWhereDoesntHave($this->loadGroupModel()->relationGroupName());
+            )->orWhereDoesntHave($this->group->relationGroupName());
     }
 
     /**
@@ -84,6 +84,6 @@ trait GroupableTrait
      */
     protected function isRelationExists(Model $model)
     {
-        if (!method_exists($model, $this->loadGroupModel()->relationGroupName())) abort(500, config('constants.errors.model_groups_undefined'));
+        if (!method_exists($model, $this->group->relationGroupName())) abort(500, config('constants.errors.model_groups_undefined'));
     }
 }
