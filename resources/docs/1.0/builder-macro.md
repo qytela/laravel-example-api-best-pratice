@@ -60,7 +60,7 @@ page         | 1         |
 
 ## Exclude
 
-Exclude columns from fillable.
+Exclude certain columns from a query builder instance.
 
 ---
 
@@ -81,7 +81,7 @@ public function index(): ModelResources
 
 ## Only
 
-Only columns selected.
+Only include certain columns in a query builder instance.
 
 ---
 

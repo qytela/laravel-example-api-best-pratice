@@ -27,9 +27,12 @@ class BuilderServiceProvider extends ServiceProvider
     public function boot()
     {
         /**
-         * Add the with-paginate to the builder
+         * Add the 'with-paginate' to the builder.
+         * Transform result to paginate.
          * 
-         * Transform result to paginate
+         * @param PaginateRequest request The PaginateRequest instance containing the pagination request data.
+         * 
+         * @return LengthAwarePaginator A paginated list of results for the query
          */
         Builder::macro('withPaginate', function (PaginateRequest $request): LengthAwarePaginator {
             /** @var Builder $this */
@@ -41,9 +44,12 @@ class BuilderServiceProvider extends ServiceProvider
         });
 
         /**
-         * Add the exclude to the builder
+         * Add the 'exclude' to the builder.
+         * Exclude certain columns from a query builder instance.
          * 
-         * Exclude column from selected
+         * @param array columns An array of column names to exclude from the query.
+         * 
+         * @return Builder The modified query builder instance.
          */
         Builder::macro('exclude', function (array $columns): Builder {
             /** @var Builder $this */
@@ -55,9 +61,12 @@ class BuilderServiceProvider extends ServiceProvider
         });
 
         /**
-         * Add the only to the builder
+         * Add the 'only' to the builder.
+         * Only include certain columns in a query builder instance.
          * 
-         * Only column selected
+         * @param array columns An array of column names to include in the query.
+         * 
+         * @return Builder The modified query builder instance.
          */
         Builder::macro('only', function (array $columns): Builder {
             /** @var Builder $this */

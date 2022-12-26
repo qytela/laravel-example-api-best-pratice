@@ -16,15 +16,27 @@ class ArticleFilter extends ModelFilter
      */
     public $relations = [];
 
-    public function title($value)
+    /**
+     * > Filter a query builder instance by the title field using a case-insensitive search.
+     * 
+     * @param value The value of the parameter.
+     * 
+     * @return Builder query builder object.
+     */
+    public function title($value): Builder
     {
-        /** @var Builder $this */
         return $this->where(DB::raw('LOWER(title)'), 'like', '%' . strtolower($value) . '%');
     }
 
-    public function type($value)
+    /**
+     * > Filter a query builder instance by the type field.
+     * 
+     * @param value The value to be used in the where clause.
+     * 
+     * @return Builder query builder instance.
+     */
+    public function type($value): Builder
     {
-        /** @var Builder $this */
         return $this->where('type', $value);
     }
 }
