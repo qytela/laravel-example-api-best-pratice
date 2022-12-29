@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use EloquentFilter\Filterable;
+use App\Traits\ClearsResponseCache;
 use App\Models\User;
 use App\Models\Group;
 
 class Article extends Model
 {
-    use HasFactory, SoftDeletes, Filterable;
+    use HasFactory, SoftDeletes, Filterable, ClearsResponseCache;
 
     /**
      * The attributes that are mass assignable.
@@ -60,9 +61,9 @@ class Article extends Model
      * 
      * @param path The path to the file.
      * 
-     * @return The url of the image.
+     * @return string The url of the image.
      */
-    protected function getThumbnailAttribute($path)
+    protected function getThumbnailAttribute($path): string
     {
         /** @var Storage $public  */
         $public = Storage::disk('public');
@@ -71,7 +72,7 @@ class Article extends Model
             return $public->url($path);
         }
 
-        return null;
+        return $public->url('images/no_image.jpg');
     }
 
     /**
@@ -84,11 +85,7 @@ class Article extends Model
      */
     public function scopeWithUser($q): Builder
     {
-        return $q->with([
-            'user' => function ($qb) {
-                $qb->select(['id', 'name']);
-            }
-        ]);
+        return $q->with(['user:id,name']);
     }
 
     public function user()
