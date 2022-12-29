@@ -17,7 +17,7 @@ Eligible group on user group (exclude superadmin) to according model group.
 
 ---
 
-> {warning.fa fa-info-circle} If you want use this function, make sure you already define `groups` relation.
+> {warning.fa fa-info-circle} If you want use this method, make sure you already define `groups` relation.
 
 Example on `Article` model
 
@@ -51,12 +51,10 @@ Example, using `eligibleGroups(Model)`
 ```php
 use App\Traits\GroupableTrait;
 
-class YourClass
+class YourClassService
 {
     // Import traits
-    use GroupableTrait, OtherTrait;
-
-    // ... IoC Container
+    use GroupableTrait;
 
     public function index(): ModelResources
     {

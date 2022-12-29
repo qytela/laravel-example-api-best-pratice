@@ -9,6 +9,7 @@
 - ## Model
     - [Local Scope](/{{route}}/{{version}}/local-scope)
     - [Builder Macro](/{{route}}/{{version}}/builder-macro)
+    - [Constants](/{{route}}/{{version}}/constants)
 
 - ## Traits
     - [Groupable Trait](/{{route}}/{{version}}/groupable-trait)
